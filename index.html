@@ -20,14 +20,12 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kantumruy Pro', sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-dark); line-height: 1.6; scroll-behavior: smooth; }
+        body { background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; scroll-behavior: smooth; }
 
         /* Welcome Screen */
         #welcome-screen { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; }
         .verify-box { background: var(--bg-color); padding: 40px 20px; border-radius: 30px; box-shadow: var(--shadow-raised); max-width: 400px; width: 100%; }
-        .v-icon { font-size: 50px; color: var(--primary); margin-bottom: 20px; animation: float 3s infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-
+        .v-icon { font-size: 50px; color: var(--primary); margin-bottom: 20px; }
         .welcome-btn { background: var(--bg-color); color: var(--primary); border: none; padding: 15px 30px; border-radius: 15px; font-weight: bold; cursor: pointer; margin-top: 25px; width: 100%; box-shadow: var(--shadow-raised); }
         .welcome-btn:active { box-shadow: var(--shadow-pressed); }
 
@@ -57,7 +55,6 @@
         .btn-buy:active { box-shadow: var(--shadow-pressed); }
 
         .help-btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--bg-color); box-shadow: var(--shadow-raised); padding: 15px; border-radius: 15px; text-decoration: none; color: var(--primary); font-weight: bold; margin: 20px 0; }
-        .help-btn:active { box-shadow: var(--shadow-pressed); }
         footer { text-align: center; font-size: 9px; opacity: 0.5; padding-bottom: 20px; }
     </style>
 </head>
@@ -65,7 +62,7 @@
 
 <div id="welcome-screen">
     <div class="verify-box">
-        <i class="fas fa-user-check v-icon"></i>
+        <i class="fas fa-user-shield v-icon"></i>
         <h1 style="font-family:'Moul'; font-size:18px;">SELECT STORE</h1>
         <p style="font-size:11px; opacity:0.7; margin-top:5px;">សូមចុចប៊ូតុងខាងក្រោមដើម្បីផ្ទៀងផ្ទាត់ Identity</p>
         <button class="welcome-btn" onclick="openApp()">START VERIFY ✅</button>
@@ -78,17 +75,17 @@
             <img id="u-avatar" class="user-avatar" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
             <div>
                 <div id="u-name" class="user-name">Telegram User</div>
-                <div style="font-size:9px; color:#2ecc71; font-weight:700;">Account Verified <i class="fas fa-check-double"></i></div>
+                <div style="font-size:9px; color:#2ecc71; font-weight:700;">Identity Verified <i class="fas fa-check-circle"></i></div>
             </div>
         </div>
         <div style="font-family:'Moul'; text-align:center; font-size:14px;">SELECT STORE</div>
     </header>
 
     <div class="category-nav">
-        <button class="nav-item" onclick="scrollToSec('fruits')">FRUITS</button>
-        <button class="nav-item" onclick="scrollToSec('starter')">STARTER</button>
-        <button class="nav-item" onclick="scrollToSec('special')">SPECIAL</button>
+        <button class="nav-item" onclick="scrollToSec('pass')">GAME PASS</button>
+        <button class="nav-item" onclick="scrollToSec('special')">SPECIAL AC</button>
         <button class="nav-item" onclick="scrollToSec('v4')">RACE V4</button>
+        <button class="nav-item" onclick="scrollToSec('starter')">STARTER</button>
         <button class="nav-item" onclick="scrollToSec('sailor')">SAILOR</button>
         <button class="nav-item" onclick="scrollToSec('aov')">AOV</button>
         <button class="nav-item" onclick="scrollToSec('anime')">ANIME</button>
@@ -98,7 +95,7 @@
 
     <div class="container">
         <a href="https://t.me/Im_RA12" class="help-btn">
-            <i class="fab fa-telegram"></i> ទាក់ទងជំនួយការ @Im_RA12
+            <i class="fab fa-telegram"></i> ជំនួយការបច្ចេកទេស @Im_RA12
         </a>
         <footer>SELECT STORE PREMIUM &copy; 2026</footer>
     </div>
@@ -112,23 +109,18 @@
     const LOG_ID = "-1003849367168";
     const ADMIN_ORDER = "Im_sal88";
 
+    // រាយមុខទំនិញពេញលេញទាំងអស់
     const database = [
         {
-            id: "fruits", title: "ស្ដុកផ្លែឈើបិសាច (FRUITS)",
+            id: "pass", title: "GAME PASS (BLOX FRUITS)",
             items: [
-                {n: "Portal Fruit", p: 0.65}, {n: "Buddha Fruit", p: 0.75}, {n: "Dough Fruit", p: 0.95},
-                {n: "Kitsune Fruit", p: 1.20}, {n: "Leopard Fruit", p: 1.20}, {n: "Dragon Fruit", p: 1.20},
-                {n: "T-Rex Fruit", p: 0.95}, {n: "Yeti Fruit", p: 1.45}, {n: "Venom Fruit", p: 0.75}
-            ]
-        },
-        {
-            id: "starter", title: "ស្ដុកអាខោនតូចៗ (STARTER)",
-            items: [
-                {n: "Level 1500 - 2000 Starter [Warr 24h]", p: 0.75},
-                {n: "Level 1500 - 2550 Rate Mythic [High]", p: 0.80},
-                {n: "Level 1500 - 2000 | Beli ច្រើន", p: 0.40},
-                {n: "Mythical Fruits Pack [Random 1-4]", p: 1.05},
-                {n: "Random Roblox Account (ចង្រៃសញ្ញា)", p: 0.50}
+                {n: "Fruit Storage +1", p: 2.75},
+                {n: "Fast Boats", p: 2.40},
+                {n: "2x Drop Chance", p: 2.40},
+                {n: "2x Money", p: 3.10},
+                {n: "2x Mastery", p: 3.10},
+                {n: "Dark Blade (Yoru)", p: 8.15},
+                {n: "Fruit Notifier", p: 18.25}
             ]
         },
         {
@@ -156,8 +148,17 @@
                 {n: "VIP Ghoul V4 FG [God+CDK+Ghoul V4 FG]", p: 3.10},
                 {n: "VIP Cyborg V4 FG [God+CDK+Cyborg V4 FG]", p: 3.10},
                 {n: "Human V4 Special [God+CDK+Human V4 FG]", p: 2.30},
-                {n: "Valkyrie Pack [God+CDK+Mirror+Valk]", p: 2.50},
-                {n: "Global God + CDK Pack [Max 2800]", p: 1.10}
+                {n: "Valkyrie Pack [God+CDK+Mirror+Valk]", p: 2.50}
+            ]
+        },
+        {
+            id: "starter", title: "អាខោនតូចៗ (STARTER)",
+            items: [
+                {n: "Level 1500 - 2000 [Warr 24h]", p: 0.75},
+                {n: "Level 1500 - 2550 Rate Mythic", p: 0.80},
+                {n: "Level 1500 - 2000 | Beli ច្រើន", p: 0.40},
+                {n: "Mythical Fruits Pack [Random 1-4]", p: 1.05},
+                {n: "Random Roblox Account (ចង្រៃសញ្ញា)", p: 0.50}
             ]
         },
         {
