@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Store | Blox Fruits Premium</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;600;700&family=Moul&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        :root {
+            --bg: #e0e5ec;
+            --text: #31344b;
+            --blue: #0088cc;
+            --shadow-light: 6px 6px 12px #a3b1c6;
+            --shadow-white: -6px -6px 12px #ffffff;
+            --shadow-inset: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kantumruy Pro', sans-serif; }
+        body { background-color: var(--bg); color: var(--text); padding: 15px; }
+
+        header { text-align: center; margin-bottom: 25px; }
+        .logo-text { font-family: 'Moul', serif; font-size: 24px; color: var(--blue); }
+        
+        .section-box {
+            background: var(--bg); border-radius: 25px; padding: 18px;
+            box-shadow: var(--shadow-light), var(--shadow-white);
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-family: 'Moul', serif; font-size: 14px; color: #e67e22;
+            margin-bottom: 15px; display: flex; align-items: center; gap: 8px;
+        }
+
+        .item-card {
+            background: var(--bg); border-radius: 18px; padding: 14px;
+            box-shadow: var(--shadow-light), var(--shadow-white);
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .item-name { font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 6px; flex: 1; line-height: 1.4; }
+        .item-price { color: var(--blue); font-weight: 900; font-size: 16px; margin-left: 10px; }
+
+        .buy-btn {
+            background: var(--bg); border: none; border-radius: 12px;
+            box-shadow: var(--shadow-light), var(--shadow-white);
+            padding: 10px 18px; color: var(--blue); font-weight: bold;
+            cursor: pointer; transition: 0.2s; font-size: 13px; margin-left: 10px;
+        }
+        .buy-btn:active { box-shadow: var(--shadow-inset); transform: scale(0.95); }
+
+        tg-emoji { width: 22px; height: 22px; vertical-align: middle; }
+        
+        #reg-ui {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg); z-index: 1000; display: flex; align-items: center; justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+<div id="reg-ui">
+    <div style="text-align: center; padding: 20px;">
+        <div style="margin-bottom: 20px;">
+            <tg-emoji emoji-id="6111581914945034708">🤩</tg-emoji>
+        </div>
+        <h1 style="font-family: 'Moul', serif; color: var(--blue); font-size: 20px;">SELECT STORE</h1>
+        <p style="font-size: 13px; margin: 15px 0 25px; opacity: 0.7;">ចុចប៊ូតុងខាងក្រោមដើម្បីចាប់ផ្ដើម</p>
+        <button onclick="register()" style="padding: 18px 35px; border-radius: 20px; border: none; background: var(--blue); color: white; font-weight: bold; box-shadow: 0 10px 20px rgba(0,136,204,0.3);">
+            <tg-emoji emoji-id="6111945964962978352">😎</tg-emoji> បង្កើតគណនី
+        </button>
+    </div>
+</div>
+
+<div id="shop-ui" style="display: none;">
+    <header>
+        <div class="logo-text">SELECT STORE</div>
+        <p style="font-size: 11px; margin-top: 5px;">
+            <tg-emoji emoji-id="6109480091094355560">📱</tg-emoji> @Im_sal88 | @Im_RA12
+        </p>
+    </header>
+
+    <div class="section-box">
+        <div class="section-title">
+            <tg-emoji emoji-id="6111409652396726525">😀</tg-emoji> VIP GLOBAL STOCK
+        </div>
+        <div class="item-card">
+            <div class="item-name"><tg-emoji emoji-id="6111824310014320054">💰</tg-emoji> Lv 1500-2000 | Beli</div>
+            <div class="item-price">$0.40</div>
+            <button class="buy-btn" onclick="buy('Lv 1500-2000 Beli', 0.40)">ទិញ</button>
+        </div>
+        <div class="item-card">
+            <div class="item-name"><tg-emoji emoji-id="6109374409129073499">🦖</tg-emoji> God 2800 + [T-Rex/Dough]</div>
+            <div class="item-price">$1.90</div>
+            <button class="buy-btn" onclick="buy('God 2800 T-Rex/Dough', 1.90)">ទិញ</button>
+        </div>
+        <div class="item-card">
+            <div class="item-name"><tg-emoji emoji-id="6111807761505328108">👑</tg-emoji> [Super VIP] Kitsune CDK</div>
+            <div class="item-price">$3.10</div>
+            <button class="buy-btn" onclick="buy('Super VIP Kitsune CDK', 3.10)">ទិញ</button>
+        </div>
+    </div>
+
+    <div class="section-box">
+        <div class="section-title">
+            <tg-emoji emoji-id="6111611795032512832">🐲</tg-emoji> V4 FULL GEAR STOCK
+        </div>
+        <div class="item-card">
+            <div class="item-name"><tg-emoji emoji-id="6109610606560548818">🌊</tg-emoji> Fish Full Gear V4</div>
+            <div class="item-price">$2.00</div>
+            <button class="buy-btn" onclick="buy('Fish Full Gear V4', 2.00)">ទិញ</button>
+        </div>
+        <div class="item-card">
+            <div class="item-name"><tg-emoji emoji-id="6111886441011223473">🦍</tg-emoji> Cyborg FG V4 + Mythic</div>
+            <div class="item-price">$2.50</div>
+            <button class="buy-btn" onclick="buy('Cyborg FG V4', 2.50)">ទិញ</button>
+        </div>
+        <div class="item-card">
+            <div class="item-name"><tg-emoji emoji-id="6118676938925023227">🤩</tg-emoji> [VIP] 6V4 Full Race</div>
+            <div class="item-price">$6.20</div>
+            <button class="buy-btn" onclick="buy('6V4 Full Race', 6.20)">ទិញ</button>
+        </div>
+    </div>
+
+    <div class="section-box">
+        <div class="section-title">
+            <tg-emoji emoji-id="6111390750245657955">⛽</tg-emoji> OTHER STOCK
+        </div>
+        <div class="item-card">
+            <div class="item-name"><tg-emoji emoji-id="6133951487602072866">🪱</tg-emoji> Random Roblox Acc</div>
+            <div class="item-price">$0.50</div>
+            <button class="buy-btn" onclick="buy('Random Roblox', 0.50)">ទិញ</button>
+        </div>
+    </div>
+
+    <div class="section-box" style="font-size: 11px; opacity: 0.8; border-top: 2px solid var(--blue);">
+        <p style="margin-bottom: 5px;"><tg-emoji emoji-id="6109669275813813088">⚠️</tg-emoji> <b>គោលការណ៍ធានា៖</b></p>
+        <p><tg-emoji emoji-id="6106968626147892198">⚡</tg-emoji> ប្តូរថ្មី ១-១ ក្នុងរយៈពេល ១២ម៉ោង</p>
+        <p><tg-emoji emoji-id="6111742619736349172">😈</tg-emoji> មិនធានាការប្រើ Hack/Script ដាច់ខាត</p>
+    </div>
+</div>
+
+<script>
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+
+    const BOT_TOKEN = "8212122943:AAFOREIno5CXRklS_X9Kiwz6iAput2zExtI";
+    const ADMIN_GROUP = "-1003849367168";
+    const ADMINS = ["Im_sal88", "Im_RA12"];
+
+    window.onload = () => {
+        tg.CloudStorage.getItem('is_registered_v2', (err, val) => {
+            if(val === 'yes') showMain();
+        });
+    };
+
+    function register() {
+        const user = tg.initDataUnsafe.user;
+        const msg = `🤩 ភ្ញៀវថ្មីបានចូលហាង!\n👤 ឈ្មោះ: ${user.first_name}\n🆔 ID: ${user.id}`;
+        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_GROUP}&text=${encodeURIComponent(msg)}`);
+        tg.CloudStorage.setItem('is_registered_v2', 'yes');
+        showMain();
+    }
+
+    function showMain() {
+        document.getElementById('reg-ui').style.display = 'none';
+        document.getElementById('shop-ui').style.display = 'block';
+    }
+
+    function buy(name, price) {
+        const user = tg.initDataUnsafe.user;
+        const admin = ADMINS[Math.floor(Math.random() * ADMINS.length)];
+        
+        const log = `🛒 កម្ម៉ង់ថ្មី!\n👤 ${user.first_name}\n📦 ${name}\n💰 $${price.toFixed(2)}`;
+        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_GROUP}&text=${encodeURIComponent(log)}`);
+
+        const text = encodeURIComponent(`សួស្ដី Admin! ខ្ញុំចង់ទិញអាខោន៖\n\n🔹 ${name}\n💵 តម្លៃ៖ $${price.toFixed(2)}\n\nសូមផ្ញើព័ត៌មានបង់ប្រាក់មកបាទ!`);
+        
+        Swal.fire({
+            title: 'បញ្ជាក់ការទិញ',
+            text: `តើអ្នកចង់ទិញ ${name} មែនទេ?`,
+            showCancelButton: true,
+            confirmButtonText: 'បាទ ទិញ',
+            cancelButtonText: 'បោះបង់',
+            background: '#e0e5ec'
+        }).then(res => {
+            if(res.isConfirmed) {
+                window.open(`https://t.me/${admin}?text=${text}`);
+            }
+        });
+    }
+</script>
+</body>
+      </html>
+
