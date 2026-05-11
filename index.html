@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Store | Premium Verification</title>
+    <title>Select Store | Premium Hub</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;600;700&family=Moul&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -20,99 +20,55 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kantumruy Pro', sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; scroll-behavior: smooth; }
+        body { background-color: var(--bg-color); color: var(--text-dark); line-height: 1.6; scroll-behavior: smooth; }
 
-        /* Welcome & Verify Screen */
-        #welcome-screen {
-            height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-align: center; padding: 20px;
-        }
-        .verify-box {
-            background: var(--bg-color); padding: 40px 20px; border-radius: 30px;
-            box-shadow: var(--shadow-raised); max-width: 400px; width: 100%;
-        }
-        .v-icon { font-size: 60px; color: var(--primary); margin-bottom: 20px; }
-        .welcome-btn {
-            background: var(--bg-color); color: var(--primary); border: none; padding: 15px 30px;
-            border-radius: 15px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 25px;
-            width: 100%; box-shadow: var(--shadow-raised); transition: 0.2s;
-        }
-        .welcome-btn:active { box-shadow: var(--shadow-pressed); transform: scale(0.98); }
+        /* Welcome Screen */
+        #welcome-screen { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; }
+        .verify-box { background: var(--bg-color); padding: 40px 20px; border-radius: 30px; box-shadow: var(--shadow-raised); max-width: 400px; width: 100%; }
+        .v-icon { font-size: 50px; color: var(--primary); margin-bottom: 20px; animation: float 3s infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        .welcome-btn { background: var(--bg-color); color: var(--primary); border: none; padding: 15px 30px; border-radius: 15px; font-weight: bold; cursor: pointer; margin-top: 25px; width: 100%; box-shadow: var(--shadow-raised); }
+        .welcome-btn:active { box-shadow: var(--shadow-pressed); }
 
         /* Main App */
-        #main-app { display: none; padding-bottom: 40px; }
+        #main-app { display: none; padding-bottom: 50px; }
+        header { background: var(--bg-color); padding: 20px; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 10px rgba(163,177,198,0.3); border-radius: 0 0 25px 25px; }
         
-        /* Profile Header Header */
-        header { 
-            background: var(--bg-color); padding: 20px; border-radius: 0 0 25px 25px;
-            box-shadow: 0 5px 15px rgba(163, 177, 198, 0.4); position: sticky; top: 0; z-index: 100;
-        }
-        .user-profile {
-            display: flex; align-items: center; gap: 15px; background: var(--bg-color);
-            padding: 12px; border-radius: 20px; box-shadow: var(--shadow-pressed);
-            margin-bottom: 15px;
-        }
-        .user-avatar { width: 50px; height: 50px; border-radius: 50%; box-shadow: var(--shadow-raised); border: 2px solid white; }
-        .user-name { font-weight: 700; font-size: 14px; color: var(--primary); }
-        .status-badge { font-size: 10px; color: #2ecc71; font-weight: bold; }
-        .logo-text { font-family: 'Moul', serif; font-size: 18px; color: var(--text-color); text-align: center; }
+        .user-profile { display: flex; align-items: center; gap: 12px; background: var(--bg-color); padding: 10px; border-radius: 20px; box-shadow: var(--shadow-pressed); margin-bottom: 10px; }
+        .user-avatar { width: 45px; height: 45px; border-radius: 50%; box-shadow: var(--shadow-raised); border: 2px solid #fff; }
+        .user-name { font-weight: 700; font-size: 13px; color: var(--primary); }
 
-        /* Category Nav */
-        .category-nav {
-            display: flex; overflow-x: auto; gap: 12px; padding: 15px;
-            scrollbar-width: none;
-        }
+        .category-nav { display: flex; overflow-x: auto; gap: 10px; padding: 15px; scrollbar-width: none; }
         .category-nav::-webkit-scrollbar { display: none; }
-        .nav-item {
-            background: var(--bg-color); box-shadow: var(--shadow-raised); padding: 10px 20px;
-            border-radius: 12px; white-space: nowrap; font-size: 11px; font-weight: 700;
-            color: var(--text-color); border: none; cursor: pointer;
-        }
+        .nav-item { background: var(--bg-color); box-shadow: var(--shadow-raised); padding: 10px 18px; border-radius: 12px; white-space: nowrap; font-size: 10px; font-weight: 700; border: none; cursor: pointer; }
         .nav-item:active { box-shadow: var(--shadow-pressed); color: var(--primary); }
 
-        .container { padding: 15px; }
-        .section-header { margin: 20px 0 10px; display: flex; align-items: center; gap: 8px; }
+        .container { padding: 10px 15px; }
+        .section-header { margin: 20px 0 10px; }
         .section-title { font-family: 'Moul', serif; font-size: 12px; color: var(--accent); }
 
-        /* Item Card Style */
-        .item-card {
-            background: var(--bg-color); border-radius: 20px; padding: 18px;
-            margin-bottom: 18px; box-shadow: var(--shadow-raised);
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .item-info { flex: 1; }
-        .item-name { font-size: 12px; font-weight: 600; color: var(--text-color); margin-bottom: 5px; }
-        .item-price { color: var(--primary); font-weight: 800; font-size: 18px; }
-        
-        .btn-buy { 
-            background: var(--bg-color); color: var(--primary); border: none;
-            padding: 10px 20px; border-radius: 12px; font-weight: bold; font-size: 12px;
-            box-shadow: var(--shadow-raised); cursor: pointer;
-        }
+        /* Item Card */
+        .item-card { background: var(--bg-color); border-radius: 20px; padding: 18px; margin-bottom: 15px; box-shadow: var(--shadow-raised); display: flex; justify-content: space-between; align-items: center; }
+        .item-info { flex: 1; padding-right: 10px; }
+        .item-name { font-size: 12px; font-weight: 600; color: var(--text-color); line-height: 1.4; }
+        .item-price { color: var(--primary); font-weight: 800; font-size: 18px; margin-top: 5px; }
+        .btn-buy { background: var(--bg-color); color: var(--primary); border: none; padding: 10px 18px; border-radius: 12px; font-weight: bold; box-shadow: var(--shadow-raised); cursor: pointer; }
         .btn-buy:active { box-shadow: var(--shadow-pressed); }
 
-        /* Help & Warranty */
-        .card-flat {
-            background: var(--bg-color); box-shadow: var(--shadow-pressed);
-            padding: 20px; border-radius: 20px; margin-top: 25px;
-        }
-        .help-btn {
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            background: var(--bg-color); box-shadow: var(--shadow-raised);
-            padding: 15px; border-radius: 15px; text-decoration: none;
-            color: var(--primary); font-weight: bold; margin-top: 15px;
-        }
-        footer { text-align: center; font-size: 10px; margin-top: 40px; opacity: 0.5; }
+        .help-btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--bg-color); box-shadow: var(--shadow-raised); padding: 15px; border-radius: 15px; text-decoration: none; color: var(--primary); font-weight: bold; margin: 20px 0; }
+        .help-btn:active { box-shadow: var(--shadow-pressed); }
+        footer { text-align: center; font-size: 9px; opacity: 0.5; padding-bottom: 20px; }
     </style>
 </head>
 <body>
 
 <div id="welcome-screen">
     <div class="verify-box">
-        <i class="fas fa-shield-alt v-icon"></i>
-        <h1 style="font-family: 'Moul'; font-size: 20px; margin-bottom: 10px;">SELECT STORE</h1>
-        <p style="font-size: 12px; opacity: 0.7;">សូមផ្ទៀងផ្ទាត់គណនី Telegram របស់អ្នក</p>
-        <button class="welcome-btn" onclick="openApp()">ផ្ទៀងផ្ទាត់ និង ចូលក្នុងហាង</button>
+        <i class="fas fa-user-check v-icon"></i>
+        <h1 style="font-family:'Moul'; font-size:18px;">SELECT STORE</h1>
+        <p style="font-size:11px; opacity:0.7; margin-top:5px;">សូមចុចប៊ូតុងខាងក្រោមដើម្បីផ្ទៀងផ្ទាត់ Identity</p>
+        <button class="welcome-btn" onclick="openApp()">START VERIFY ✅</button>
     </div>
 </div>
 
@@ -122,37 +78,28 @@
             <img id="u-avatar" class="user-avatar" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
             <div>
                 <div id="u-name" class="user-name">Telegram User</div>
-                <div class="status-badge"><i class="fas fa-check-circle"></i> VERIFIED ACCOUNT</div>
+                <div style="font-size:9px; color:#2ecc71; font-weight:700;">Account Verified <i class="fas fa-check-double"></i></div>
             </div>
         </div>
-        <div class="logo-text">SELECT STORE</div>
+        <div style="font-family:'Moul'; text-align:center; font-size:14px;">SELECT STORE</div>
     </header>
 
     <div class="category-nav">
+        <button class="nav-item" onclick="scrollToSec('fruits')">FRUITS</button>
         <button class="nav-item" onclick="scrollToSec('starter')">STARTER</button>
-        <button class="nav-item" onclick="scrollToSec('special')">SPECIAL AC</button>
+        <button class="nav-item" onclick="scrollToSec('special')">SPECIAL</button>
         <button class="nav-item" onclick="scrollToSec('v4')">RACE V4</button>
         <button class="nav-item" onclick="scrollToSec('sailor')">SAILOR</button>
         <button class="nav-item" onclick="scrollToSec('aov')">AOV</button>
-        <button class="nav-item" onclick="scrollToSec('anime')">ANIME SET</button>
+        <button class="nav-item" onclick="scrollToSec('anime')">ANIME</button>
     </div>
 
     <div class="container" id="product-list"></div>
 
     <div class="container">
         <a href="https://t.me/Im_RA12" class="help-btn">
-            <i class="fab fa-telegram"></i> ជំនួយការបច្ចេកទេស @Im_RA12
+            <i class="fab fa-telegram"></i> ទាក់ទងជំនួយការ @Im_RA12
         </a>
-
-        <div class="card-flat">
-            <p style="font-family:'Moul'; font-size:12px; color:var(--accent); margin-bottom: 10px;">គោលការណ៍ធានា (WARRANTY)</p>
-            <div style="font-size:11px; color: #555;">
-                - ធានាប្តូរថ្មីក្នុងរយៈពេល ១២ម៉ោង (ករណី Reset/Security)<br>
-                - ធានាផ្លែឈើក្នុង Inventory ១ម៉ោងដំបូង<br>
-                - មិនធានាចំពោះការប្រើប្រាស់ Script/Hack<br>
-                - ប្តូរ Pass រួច = អស់ការធានា
-            </div>
-        </div>
         <footer>SELECT STORE PREMIUM &copy; 2026</footer>
     </div>
 </div>
@@ -167,12 +114,21 @@
 
     const database = [
         {
-            id: "starter", title: "អាខោនតូចៗ (STARTER)",
+            id: "fruits", title: "ស្ដុកផ្លែឈើបិសាច (FRUITS)",
             items: [
-                {n: "Level 1500 - 2000 [Warr 24h]", p: 0.75},
-                {n: "Level 1500 - 2550 Rate Mythic", p: 0.80},
+                {n: "Portal Fruit", p: 0.65}, {n: "Buddha Fruit", p: 0.75}, {n: "Dough Fruit", p: 0.95},
+                {n: "Kitsune Fruit", p: 1.20}, {n: "Leopard Fruit", p: 1.20}, {n: "Dragon Fruit", p: 1.20},
+                {n: "T-Rex Fruit", p: 0.95}, {n: "Yeti Fruit", p: 1.45}, {n: "Venom Fruit", p: 0.75}
+            ]
+        },
+        {
+            id: "starter", title: "ស្ដុកអាខោនតូចៗ (STARTER)",
+            items: [
+                {n: "Level 1500 - 2000 Starter [Warr 24h]", p: 0.75},
+                {n: "Level 1500 - 2550 Rate Mythic [High]", p: 0.80},
                 {n: "Level 1500 - 2000 | Beli ច្រើន", p: 0.40},
-                {n: "Random Roblox (ចង្រៃសញ្ញា)", p: 0.50}
+                {n: "Mythical Fruits Pack [Random 1-4]", p: 1.05},
+                {n: "Random Roblox Account (ចង្រៃសញ្ញា)", p: 0.50}
             ]
         },
         {
@@ -180,43 +136,57 @@
             items: [
                 {n: "Level 2800 God + T-Rex Inventory", p: 1.35},
                 {n: "Level 2800 + Godhuman Basic", p: 1.00},
+                {n: "LV 2800 Godhuman + Mammoth", p: 1.30},
                 {n: "Kitsune Inventory [100% Kitsune]", p: 4.25},
-                {n: "God 2800 + Tiger/Venom/Yeti", p: 1.80},
-                {n: "Level 2800 God + Dough Inventory", p: 1.50}
+                {n: "God 2800 + Tiger Inventory", p: 1.85},
+                {n: "God 2800 + Venom Inventory", p: 1.65},
+                {n: "Godhuman 2800 + Yeti [Warr 3 Days]", p: 1.85},
+                {n: "Level 2800 God + Dough Inventory", p: 1.50},
+                {n: "Level 2750 God + Gas Inventory", p: 1.45}
             ]
         },
         {
-            id: "v4", title: "RACE V4 FULL GEAR",
+            id: "v4", title: "VIP RACE V4 FULL GEAR",
             items: [
-                {n: "Super VIP Draco [God+CDK+SGT+V4]", p: 6.20},
-                {n: "VIP Race V4 FG (Fish/Mink/Sky)", p: 3.10},
-                {n: "Human V4 Special [God+CDK+V4]", p: 2.30},
-                {n: "Global God + CDK Pack [Max]", p: 1.10}
+                {n: "Super VIP Draco [God+CDK+SGT+V4 FG]", p: 6.20},
+                {n: "VIP Draco FG [God+CDK+Draco V4 FG]", p: 5.00},
+                {n: "VIP Fish V4 FG [God+CDK+Fish V4 FG]", p: 3.10},
+                {n: "VIP Mink V4 FG [God+CDK+Mink V4 FG]", p: 3.10},
+                {n: "VIP Sky V4 FG [God+CDK+Sky V4 FG]", p: 3.10},
+                {n: "VIP Ghoul V4 FG [God+CDK+Ghoul V4 FG]", p: 3.10},
+                {n: "VIP Cyborg V4 FG [God+CDK+Cyborg V4 FG]", p: 3.10},
+                {n: "Human V4 Special [God+CDK+Human V4 FG]", p: 2.30},
+                {n: "Valkyrie Pack [God+CDK+Mirror+Valk]", p: 2.50},
+                {n: "Global God + CDK Pack [Max 2800]", p: 1.10}
             ]
         },
         {
             id: "sailor", title: "SAILOR PIECE (MAX 13000)",
             items: [
                 {n: "Sailor Pro Max [Sukuna v2+Ichigo]", p: 1.40},
-                {n: "Sailor Ichigo [Max Level]", p: 0.85},
-                {n: "Sailor Moon Slayer [Sukuna v2]", p: 1.20}
+                {n: "Sailor Ichigo [Max Level 13000]", p: 0.85},
+                {n: "Sailor Moon Slayer [100% Sukuna v2]", p: 1.20},
+                {n: "Sailor Lucky Pack [x2 Lucky + x2 Drop]", p: 1.85}
             ]
         },
         {
             id: "aov", title: "ARENA OF VALOR (AOV)",
             items: [
-                {n: "AOV SSS+ Premium [Bao Log]", p: 0.60},
+                {n: "AOV SSS+ Premium [Bao Log/Band]", p: 0.60},
                 {n: "AOV Super Skin 400+ Skins", p: 1.45},
-                {n: "AOV Skin 240+ Pack [Bao Log]", p: 0.80}
+                {n: "AOV Pro Skin 150+ Skins", p: 0.65},
+                {n: "Skin 240+ Pack [Bao Log]", p: 0.80}
             ]
         },
         {
             id: "anime", title: "ANIME SETS & CRATES",
             items: [
                 {n: "Aura Pack [x500 Aura Crate]", p: 2.35},
-                {n: "Clan Reroll [x200k Reroll]", p: 2.05},
-                {n: "Garou/Frieren Set [Unlocked F]", p: 2.00},
-                {n: "Madara/DIO Set [Unlocked F]", p: 1.60}
+                {n: "Clan Reroll [x200,000 Reroll]", p: 2.05},
+                {n: "Garou Set [Unlocked Skill F]", p: 2.35},
+                {n: "Frieren Set [Unlocked Skill F]", p: 1.60},
+                {n: "Madara Set [Unlocked Skill F]", p: 1.60},
+                {n: "DIO Set [Unlocked Skill F]", p: 1.60}
             ]
         }
     ];
@@ -227,9 +197,8 @@
             document.getElementById('u-name').innerText = user.first_name + (user.last_name ? ' ' + user.last_name : '');
             if(user.photo_url) document.getElementById('u-avatar').src = user.photo_url;
         }
+        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${LOG_ID}&text=${encodeURIComponent('IDENTITY VERIFIED: ' + (user ? user.first_name : 'Unknown'))}`);
         
-        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${LOG_ID}&text=${encodeURIComponent('VERIFIED: ' + (user ? user.first_name : 'Unknown'))}`);
-
         document.getElementById('welcome-screen').style.display = 'none';
         document.getElementById('main-app').style.display = 'block';
         render();
@@ -255,12 +224,11 @@
 
     function scrollToSec(id) {
         const el = document.getElementById(id);
-        window.scrollTo({ top: el.offsetTop - 150, behavior: 'smooth' });
+        window.scrollTo({ top: el.offsetTop - 140, behavior: 'smooth' });
     }
 
     function order(name, price) {
         const user = tg.initDataUnsafe.user || { first_name: 'អតិថិជន' };
-        
         fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${LOG_ID}&text=${encodeURIComponent('ORDER: ' + name + ' | BY: ' + user.first_name)}`);
 
         Swal.fire({
@@ -270,12 +238,12 @@
             showCancelButton: true,
             confirmButtonText: 'បាទ/ចាស',
             cancelButtonText: 'បោះបង់',
+            confirmButtonColor: '#0088cc',
             background: '#e0e5ec',
-            color: '#31344b',
-            confirmButtonColor: '#0088cc'
+            color: '#31344b'
         }).then(res => {
             if(res.isConfirmed) {
-                const text = encodeURIComponent(`សួស្ដី Admin! ខ្ញុំគឺ ${user.first_name} ចង់ទិញទំនិញតាមរយៈ Mini App៖\n\n🔹 ទំនិញ៖ ${name}\n💵 តម្លៃ៖ $${price.toFixed(2)}\n\nសូម Admin ជួយឆែកមើលផង!`);
+                const text = encodeURIComponent(`សួស្ដី Admin! ខ្ញុំគឺ ${user.first_name} ចង់ទិញទំនិញ៖\n\n🔹 ទំនិញ៖ ${name}\n💵 តម្លៃ៖ $${price.toFixed(2)}\n\nសូម Admin ជួយឆែកមើលផង បាទ/ចាស!`);
                 window.open(`https://t.me/${ADMIN_ORDER}?text=${text}`);
             }
         });
