@@ -3,120 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Store | Premium Shop</title>
+    <title>Select Store | Premium Verification</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;600;700&family=Moul&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
         :root {
+            --bg-color: #e0e5ec;
+            --text-color: #31344b;
             --primary: #0088cc;
-            --bg: #f8f9fa;
-            --card-bg: #ffffff;
-            --border: #dee2e6;
-            --text-dark: #212529;
             --accent: #d35400;
+            --shadow-raised: 6px 6px 12px #a3b1c6, -6px -6px 12px #ffffff;
+            --shadow-pressed: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kantumruy Pro', sans-serif; }
-        body { background-color: var(--bg); color: var(--text-dark); line-height: 1.6; }
+        body { background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; scroll-behavior: smooth; }
 
-        /* Welcome Screen */
+        /* Welcome & Verify Screen */
         #welcome-screen {
-            height: 100vh; display: flex; align-items: center; justify-content: center;
-            background: #ffffff; text-align: center;
+            height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; padding: 20px;
         }
-        .welcome-box { border: 2px solid var(--primary); padding: 40px 30px; border-radius: 20px; width: 85%; }
+        .verify-box {
+            background: var(--bg-color); padding: 40px 20px; border-radius: 30px;
+            box-shadow: var(--shadow-raised); max-width: 400px; width: 100%;
+        }
+        .v-icon { font-size: 60px; color: var(--primary); margin-bottom: 20px; }
         .welcome-btn {
-            background: var(--primary); color: white; border: none; padding: 15px 30px;
-            border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 20px;
-            width: 100%;
+            background: var(--bg-color); color: var(--primary); border: none; padding: 15px 30px;
+            border-radius: 15px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 25px;
+            width: 100%; box-shadow: var(--shadow-raised); transition: 0.2s;
         }
+        .welcome-btn:active { box-shadow: var(--shadow-pressed); transform: scale(0.98); }
 
         /* Main App */
         #main-app { display: none; padding-bottom: 40px; }
+        
+        /* Profile Header Header */
         header { 
-            background: var(--card-bg); padding: 25px 20px; text-align: center; 
-            border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100;
+            background: var(--bg-color); padding: 20px; border-radius: 0 0 25px 25px;
+            box-shadow: 0 5px 15px rgba(163, 177, 198, 0.4); position: sticky; top: 0; z-index: 100;
         }
-        .logo { font-family: 'Moul', serif; color: var(--primary); font-size: 22px; letter-spacing: 1px; }
+        .user-profile {
+            display: flex; align-items: center; gap: 15px; background: var(--bg-color);
+            padding: 12px; border-radius: 20px; box-shadow: var(--shadow-pressed);
+            margin-bottom: 15px;
+        }
+        .user-avatar { width: 50px; height: 50px; border-radius: 50%; box-shadow: var(--shadow-raised); border: 2px solid white; }
+        .user-name { font-weight: 700; font-size: 14px; color: var(--primary); }
+        .status-badge { font-size: 10px; color: #2ecc71; font-weight: bold; }
+        .logo-text { font-family: 'Moul', serif; font-size: 18px; color: var(--text-color); text-align: center; }
+
+        /* Category Nav */
+        .category-nav {
+            display: flex; overflow-x: auto; gap: 12px; padding: 15px;
+            scrollbar-width: none;
+        }
+        .category-nav::-webkit-scrollbar { display: none; }
+        .nav-item {
+            background: var(--bg-color); box-shadow: var(--shadow-raised); padding: 10px 20px;
+            border-radius: 12px; white-space: nowrap; font-size: 11px; font-weight: 700;
+            color: var(--text-color); border: none; cursor: pointer;
+        }
+        .nav-item:active { box-shadow: var(--shadow-pressed); color: var(--primary); }
 
         .container { padding: 15px; }
-        .section-header { 
-            margin: 30px 0 15px; padding-bottom: 5px; border-bottom: 2px solid var(--accent);
-            display: inline-block;
-        }
-        .section-title { font-family: 'Moul', serif; font-size: 14px; color: var(--accent); }
+        .section-header { margin: 20px 0 10px; display: flex; align-items: center; gap: 8px; }
+        .section-title { font-family: 'Moul', serif; font-size: 12px; color: var(--accent); }
 
-        /* Product Card Layout (No Image) */
+        /* Item Card Style */
         .item-card {
-            background: var(--card-bg); border-radius: 12px; padding: 18px;
-            margin-bottom: 15px; border: 1px solid var(--border);
+            background: var(--bg-color); border-radius: 20px; padding: 18px;
+            margin-bottom: 18px; box-shadow: var(--shadow-raised);
             display: flex; justify-content: space-between; align-items: center;
-            transition: 0.2s;
         }
-        .item-card:active { background: #f1f3f5; transform: scale(0.98); }
-        
-        .item-info { flex: 1; padding-right: 15px; }
-        .item-name { font-size: 13px; font-weight: 600; color: #333; margin-bottom: 4px; }
+        .item-info { flex: 1; }
+        .item-name { font-size: 12px; font-weight: 600; color: var(--text-color); margin-bottom: 5px; }
         .item-price { color: var(--primary); font-weight: 800; font-size: 18px; }
         
         .btn-buy { 
-            background: #ffffff; color: var(--primary); border: 1.5px solid var(--primary); 
-            padding: 10px 22px; border-radius: 8px; font-weight: bold; font-size: 13px; 
-            cursor: pointer; transition: 0.2s;
+            background: var(--bg-color); color: var(--primary); border: none;
+            padding: 10px 20px; border-radius: 12px; font-weight: bold; font-size: 12px;
+            box-shadow: var(--shadow-raised); cursor: pointer;
         }
-        .btn-buy:hover { background: var(--primary); color: white; }
+        .btn-buy:active { box-shadow: var(--shadow-pressed); }
 
-        .warranty-card { 
-            background: #fff; border-radius: 12px; padding: 20px; margin-top: 30px; 
-            border: 1px solid #ced4da;
+        /* Help & Warranty */
+        .card-flat {
+            background: var(--bg-color); box-shadow: var(--shadow-pressed);
+            padding: 20px; border-radius: 20px; margin-top: 25px;
         }
-        .warranty-title { font-weight: 700; font-size: 14px; color: var(--accent); margin-bottom: 10px; text-decoration: underline; }
-        .warranty-text { font-size: 11.5px; color: #495057; }
-        
-        footer { text-align: center; font-size: 10px; margin-top: 40px; color: #adb5bd; letter-spacing: 1px; }
+        .help-btn {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            background: var(--bg-color); box-shadow: var(--shadow-raised);
+            padding: 15px; border-radius: 15px; text-decoration: none;
+            color: var(--primary); font-weight: bold; margin-top: 15px;
+        }
+        footer { text-align: center; font-size: 10px; margin-top: 40px; opacity: 0.5; }
     </style>
 </head>
 <body>
 
 <div id="welcome-screen">
-    <div class="welcome-box">
-        <h1 style="font-family: 'Moul', serif; color: var(--primary); margin-bottom: 10px;">SELECT STORE</h1>
-        <p style="font-size: 12px; color: #666;">ហាងលក់អាខោនហ្គេមផ្លូវការ</p>
-        <button class="welcome-btn" onclick="openApp()">ចូលកាន់ហាងទំនិញ</button>
+    <div class="verify-box">
+        <i class="fas fa-shield-alt v-icon"></i>
+        <h1 style="font-family: 'Moul'; font-size: 20px; margin-bottom: 10px;">SELECT STORE</h1>
+        <p style="font-size: 12px; opacity: 0.7;">សូមផ្ទៀងផ្ទាត់គណនី Telegram របស់អ្នក</p>
+        <button class="welcome-btn" onclick="openApp()">ផ្ទៀងផ្ទាត់ និង ចូលក្នុងហាង</button>
     </div>
 </div>
 
 <div id="main-app">
     <header>
-        <div class="logo">SELECT STORE</div>
-        <p style="font-size: 11px; color: #888; margin-top: 5px;">ADMIN: @Im_sal88 | @Im_RA12</p>
-    </header>
-
-    <div class="container">
-        <div class="section-header"><span class="section-title">ស្ដុកអាខោន VIP GLOBAL</span></div>
-        <div id="list-global"></div>
-
-        <div class="section-header"><span class="section-title">ស្ដុកអាខោន VIP ថ្មីៗ</span></div>
-        <div id="list-new"></div>
-
-        <div class="section-header"><span class="section-title">ស្ដុក V4 FULL GEAR</span></div>
-        <div id="list-v4"></div>
-
-        <div class="section-header"><span class="section-title">ស្ដុក GLOBAL VIP ស៊េរីថ្មី</span></div>
-        <div id="list-global-vip"></div>
-
-        <div class="warranty-card">
-            <div class="warranty-title">គោលការណ៍ធានា និងការការពារ</div>
-            <div class="warranty-text">
-                - ធានាប្តូរថ្មីជូនក្នុងរយៈពេល ១២ម៉ោង ករណី Reset Pass ឬ Security<br>
-                - មិនធានាចំពោះការប្រើប្រាស់ Script ឬ Hack ឡើយ<br>
-                - ធានាផ្លែឈើក្នុងខ្លួនរយៈពេល ១ម៉ោងដំបូងបន្ទាប់ពីទិញរួច<br>
-                - អាខោនដែលបានប្តូរលេខសម្ងាត់រួច គឺអស់ការធានា
+        <div class="user-profile">
+            <img id="u-avatar" class="user-avatar" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+            <div>
+                <div id="u-name" class="user-name">Telegram User</div>
+                <div class="status-badge"><i class="fas fa-check-circle"></i> VERIFIED ACCOUNT</div>
             </div>
         </div>
+        <div class="logo-text">SELECT STORE</div>
+    </header>
 
+    <div class="category-nav">
+        <button class="nav-item" onclick="scrollToSec('starter')">STARTER</button>
+        <button class="nav-item" onclick="scrollToSec('special')">SPECIAL AC</button>
+        <button class="nav-item" onclick="scrollToSec('v4')">RACE V4</button>
+        <button class="nav-item" onclick="scrollToSec('sailor')">SAILOR</button>
+        <button class="nav-item" onclick="scrollToSec('aov')">AOV</button>
+        <button class="nav-item" onclick="scrollToSec('anime')">ANIME SET</button>
+    </div>
+
+    <div class="container" id="product-list"></div>
+
+    <div class="container">
+        <a href="https://t.me/Im_RA12" class="help-btn">
+            <i class="fab fa-telegram"></i> ជំនួយការបច្ចេកទេស @Im_RA12
+        </a>
+
+        <div class="card-flat">
+            <p style="font-family:'Moul'; font-size:12px; color:var(--accent); margin-bottom: 10px;">គោលការណ៍ធានា (WARRANTY)</p>
+            <div style="font-size:11px; color: #555;">
+                - ធានាប្តូរថ្មីក្នុងរយៈពេល ១២ម៉ោង (ករណី Reset/Security)<br>
+                - ធានាផ្លែឈើក្នុង Inventory ១ម៉ោងដំបូង<br>
+                - មិនធានាចំពោះការប្រើប្រាស់ Script/Hack<br>
+                - ប្តូរ Pass រួច = អស់ការធានា
+            </div>
+        </div>
         <footer>SELECT STORE PREMIUM &copy; 2026</footer>
     </div>
 </div>
@@ -127,50 +163,84 @@
 
     const BOT_TOKEN = "8212122943:AAFOREIno5CXRklS_X9Kiwz6iAput2zExtI";
     const LOG_ID = "-1003849367168";
-    const ADMINS = ["Im_sal88", "Im_RA12"];
+    const ADMIN_ORDER = "Im_sal88";
 
-    const items = {
-        global: [
-            {n: "Level 1500-2000 | Beli ច្រើន", p: 0.40},
-            {n: "Level 1500-2550 | Mythic Chance", p: 0.70},
-            {n: "God 2800 + [Venom / Mammoth / Yeti]", p: 1.30},
-            {n: "God 2800 + [T-Rex / Dough / Gas]", p: 1.90},
-            {n: "[Super VIP] God 2800 + CDK + Kitsune", p: 3.10}
-        ],
-        new: [
-            {n: "GOD + CDK + Full Gear (ស្តង់ដារ)", p: 2.00},
-            {n: "GOD + CDK + Fish Full Gear V4", p: 2.00},
-            {n: "GOD + CDK + SGT Draco FG V4", p: 4.50},
-            {n: "GOD + CDK + Cyborg FG V4 + Random Dough", p: 2.50},
-            {n: "[VIP] GOD + CDK + Mirror + Valk + Mythic", p: 3.10}
-        ],
-        v4: [
-            {n: "Max 2800 + God + CDK + Soul Guitar", p: 1.60},
-            {n: "Max 2800 + God + CDK + SG + Mink V4 FG", p: 2.00},
-            {n: "Max 2800 + God + CDK + SG + Fish V4 FG", p: 2.00},
-            {n: "Random Roblox Account (ចង្រៃសញ្ញា)", p: 0.50}
-        ],
-        globalVip: [
-            {n: "GOD + CDK + HUMAN V4 Full Gear", p: 1.65},
-            {n: "GOD + CDK + CYBORG FG + Random Mythic", p: 1.80},
-            {n: "[SUPER VIP] 6V4 Full Gear (គ្រប់ Race)", p: 6.20},
-            {n: "GOD + CDK + SKY/FISH V4 Full Gear", p: 1.65}
-        ]
-    };
+    const database = [
+        {
+            id: "starter", title: "អាខោនតូចៗ (STARTER)",
+            items: [
+                {n: "Level 1500 - 2000 [Warr 24h]", p: 0.75},
+                {n: "Level 1500 - 2550 Rate Mythic", p: 0.80},
+                {n: "Level 1500 - 2000 | Beli ច្រើន", p: 0.40},
+                {n: "Random Roblox (ចង្រៃសញ្ញា)", p: 0.50}
+            ]
+        },
+        {
+            id: "special", title: "អាខោន VIP & SPECIAL",
+            items: [
+                {n: "Level 2800 God + T-Rex Inventory", p: 1.35},
+                {n: "Level 2800 + Godhuman Basic", p: 1.00},
+                {n: "Kitsune Inventory [100% Kitsune]", p: 4.25},
+                {n: "God 2800 + Tiger/Venom/Yeti", p: 1.80},
+                {n: "Level 2800 God + Dough Inventory", p: 1.50}
+            ]
+        },
+        {
+            id: "v4", title: "RACE V4 FULL GEAR",
+            items: [
+                {n: "Super VIP Draco [God+CDK+SGT+V4]", p: 6.20},
+                {n: "VIP Race V4 FG (Fish/Mink/Sky)", p: 3.10},
+                {n: "Human V4 Special [God+CDK+V4]", p: 2.30},
+                {n: "Global God + CDK Pack [Max]", p: 1.10}
+            ]
+        },
+        {
+            id: "sailor", title: "SAILOR PIECE (MAX 13000)",
+            items: [
+                {n: "Sailor Pro Max [Sukuna v2+Ichigo]", p: 1.40},
+                {n: "Sailor Ichigo [Max Level]", p: 0.85},
+                {n: "Sailor Moon Slayer [Sukuna v2]", p: 1.20}
+            ]
+        },
+        {
+            id: "aov", title: "ARENA OF VALOR (AOV)",
+            items: [
+                {n: "AOV SSS+ Premium [Bao Log]", p: 0.60},
+                {n: "AOV Super Skin 400+ Skins", p: 1.45},
+                {n: "AOV Skin 240+ Pack [Bao Log]", p: 0.80}
+            ]
+        },
+        {
+            id: "anime", title: "ANIME SETS & CRATES",
+            items: [
+                {n: "Aura Pack [x500 Aura Crate]", p: 2.35},
+                {n: "Clan Reroll [x200k Reroll]", p: 2.05},
+                {n: "Garou/Frieren Set [Unlocked F]", p: 2.00},
+                {n: "Madara/DIO Set [Unlocked F]", p: 1.60}
+            ]
+        }
+    ];
 
     function openApp() {
         const user = tg.initDataUnsafe.user;
-        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${LOG_ID}&text=${encodeURIComponent('ENTRY: ' + (user.first_name || 'User'))}`);
+        if(user) {
+            document.getElementById('u-name').innerText = user.first_name + (user.last_name ? ' ' + user.last_name : '');
+            if(user.photo_url) document.getElementById('u-avatar').src = user.photo_url;
+        }
+        
+        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${LOG_ID}&text=${encodeURIComponent('VERIFIED: ' + (user ? user.first_name : 'Unknown'))}`);
+
         document.getElementById('welcome-screen').style.display = 'none';
         document.getElementById('main-app').style.display = 'block';
+        render();
     }
 
     function render() {
-        const target = { global: 'list-global', new: 'list-new', v4: 'list-v4', globalVip: 'list-global-vip' };
-        for (let key in items) {
-            const el = document.getElementById(target[key]);
-            items[key].forEach(i => {
-                el.innerHTML += `
+        const list = document.getElementById('product-list');
+        list.innerHTML = database.map(sec => `
+            <div id="${sec.id}">
+                <div class="section-header"><span class="section-title">${sec.title}</span></div>
+                ${sec.items.map(i => `
                     <div class="item-card">
                         <div class="item-info">
                             <div class="item-name">${i.n}</div>
@@ -178,33 +248,39 @@
                         </div>
                         <button class="btn-buy" onclick="order('${i.n}', ${i.p})">ទិញ</button>
                     </div>
-                `;
-            });
-        }
+                `).join('')}
+            </div>
+        `).join('');
+    }
+
+    function scrollToSec(id) {
+        const el = document.getElementById(id);
+        window.scrollTo({ top: el.offsetTop - 150, behavior: 'smooth' });
     }
 
     function order(name, price) {
-        const admin = ADMINS[Math.floor(Math.random() * ADMINS.length)];
-        const user = tg.initDataUnsafe.user;
+        const user = tg.initDataUnsafe.user || { first_name: 'អតិថិជន' };
         
         fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${LOG_ID}&text=${encodeURIComponent('ORDER: ' + name + ' | BY: ' + user.first_name)}`);
 
         Swal.fire({
-            title: 'បញ្ជាក់ការកម្ម៉ង់',
-            text: 'តើអ្នកចង់ទិញទំនិញនេះមែនទេ?',
+            title: 'បញ្ជាក់ការទិញ',
+            text: `តើអ្នកចង់ទិញ "${name}" មែនទេ?`,
+            icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'បាទ/ចាស',
             cancelButtonText: 'បោះបង់',
+            background: '#e0e5ec',
+            color: '#31344b',
             confirmButtonColor: '#0088cc'
         }).then(res => {
             if(res.isConfirmed) {
-                const text = encodeURIComponent(`សួស្ដី Admin! ខ្ញុំចង់ទិញអាខោន Blox Fruits ប្រភេទ៖\n\n- ទំនិញ៖ ${name}\n- តម្លៃ៖ $${price.toFixed(2)}\n\nសូមផ្ញើព័ត៌មានបង់ប្រាក់បាទ!`);
-                window.open(`https://t.me/${admin}?text=${text}`);
+                const text = encodeURIComponent(`សួស្ដី Admin! ខ្ញុំគឺ ${user.first_name} ចង់ទិញទំនិញតាមរយៈ Mini App៖\n\n🔹 ទំនិញ៖ ${name}\n💵 តម្លៃ៖ $${price.toFixed(2)}\n\nសូម Admin ជួយឆែកមើលផង!`);
+                window.open(`https://t.me/${ADMIN_ORDER}?text=${text}`);
             }
         });
     }
-
-    render();
 </script>
 </body>
 </html>
+
