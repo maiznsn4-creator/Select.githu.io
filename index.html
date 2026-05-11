@@ -3,106 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Store | Blox Fruits VIP</title>
+    <title>Select Store | Premium Blox Fruits</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;600;700&family=Moul&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
         :root {
-            --bg: #e0e5ec;
-            --text: #31344b;
-            --blue: #0088cc;
-            --shadow-light: 6px 6px 12px #a3b1c6;
-            --shadow-white: -6px -6px 12px #ffffff;
-            --shadow-inset: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff;
+            --primary: #0088cc;
+            --bg: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-dark: #2c3e50;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kantumruy Pro', sans-serif; }
-        body { background-color: var(--bg); color: var(--text); padding: 15px; }
+        body { background-color: var(--bg); color: var(--text-dark); }
 
-        /* លាក់បាំងហាងសិនដើម្បីឱ្យគេចុះឈ្មោះ */
+        /* Welcome Screen */
+        #welcome-screen {
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://i.ytimg.com/vi/S7p51M569w0/maxresdefault.jpg');
+            background-size: cover; background-position: center; color: white; text-align: center;
+        }
+        .welcome-box { padding: 20px; }
+        .welcome-btn {
+            background: var(--primary); color: white; border: none; padding: 15px 40px;
+            border-radius: 30px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 20px;
+        }
+
+        /* Main App */
         #main-app { display: none; }
+        header { background: var(--card-bg); padding: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
+        .logo { font-family: 'Moul', serif; color: var(--primary); font-size: 20px; }
 
-        header { text-align: center; margin-bottom: 25px; }
-        .logo { font-family: 'Moul', serif; font-size: 24px; color: var(--blue); }
+        .container { padding: 15px; }
+        .section-title { font-family: 'Moul', serif; font-size: 13px; color: #e67e22; margin: 25px 0 15px; border-left: 4px solid #e67e22; padding-left: 10px; }
 
-        .section-title { font-family: 'Moul', serif; font-size: 14px; color: #e67e22; margin: 20px 0 10px; border-left: 4px solid #e67e22; padding-left: 10px; }
-
+        /* Product Card */
         .item-card {
-            background: var(--bg); border-radius: 15px; padding: 15px;
-            box-shadow: var(--shadow-light), var(--shadow-white);
-            margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;
+            background: var(--card-bg); border-radius: 18px; overflow: hidden;
+            display: flex; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: 0.3s; border: 1px solid #eee;
         }
+        .item-img { width: 95px; height: 95px; object-fit: cover; background: #fafafa; }
+        .item-info { flex: 1; padding: 12px; display: flex; flex-direction: column; justify-content: center; }
+        .item-name { font-size: 12px; font-weight: 700; margin-bottom: 5px; line-height: 1.4; color: #333; }
+        .item-price { color: var(--primary); font-weight: 800; font-size: 16px; }
+        .btn-buy { background: #f0f8ff; color: var(--primary); border: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; font-size: 12px; align-self: flex-end; margin-top: -25px; cursor: pointer; }
 
-        .item-info { flex: 1; padding-right: 10px; }
-        .item-name { font-size: 12px; font-weight: bold; line-height: 1.4; }
-        .item-price { color: var(--blue); font-weight: 800; font-size: 16px; margin-top: 5px; }
-
-        .buy-btn {
-            background: var(--bg); border: none; border-radius: 10px;
-            box-shadow: var(--shadow-light), var(--shadow-white);
-            padding: 10px 15px; color: var(--blue); font-weight: bold; cursor: pointer; transition: 0.2s;
-        }
-        .buy-btn:active { box-shadow: var(--shadow-inset); transform: scale(0.95); }
-
-        /* Registration UI */
-        #reg-screen {
-            height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;
-        }
-        .reg-box {
-            background: var(--bg); padding: 30px; border-radius: 30px;
-            box-shadow: var(--shadow-light), var(--shadow-white);
-            width: 90%;
-        }
-        .reg-btn {
-            margin-top: 20px; width: 100%; padding: 15px; border-radius: 15px; border: none;
-            background: var(--blue); color: white; font-weight: bold; font-size: 16px;
-        }
-
-        .warranty-box {
-            background: var(--bg); border-radius: 15px; padding: 15px;
-            box-shadow: var(--shadow-inset); margin-top: 20px; font-size: 11px; line-height: 1.6;
-        }
+        .warranty-card { background: #fff5eb; border: 1px dashed #e67e22; border-radius: 15px; padding: 15px; margin-top: 20px; font-size: 11px; line-height: 1.8; }
     </style>
 </head>
 <body>
 
-<div id="reg-screen">
-    <div class="reg-box">
-        <h2 style="font-family: 'Moul', serif; color: var(--blue);">SELECT STORE</h2>
-        <p style="margin: 15px 0; font-size: 13px; opacity: 0.8;">សូមចុចប៊ូតុងខាងក្រោមដើម្បីចូលកាន់ហាង</p>
-        <button class="reg-btn" onclick="registerUser()">ចុះឈ្មោះចូលវៀនសាក</button>
+<div id="welcome-screen">
+    <div class="welcome-box">
+        <h1 style="font-family: 'Moul', serif; font-size: 28px;">SELECT STORE</h1>
+        <p>ស្វាគមន៍មកកាន់ហាងលក់អាខោនលំដាប់ Premium</p>
+        <button class="welcome-btn" onclick="openStore()">ចូលទៅកាន់ហាង</button>
     </div>
 </div>
 
 <div id="main-app">
     <header>
         <div class="logo">SELECT STORE</div>
-        <p style="font-size: 12px; opacity: 0.6;">Admin: @Im_RA12 | @Im_sal88</p>
+        <p style="font-size: 10px; opacity: 0.7;">Admin: @Im_sal88 | @Im_RA12</p>
     </header>
 
-    <div class="section-title">ស្ដុក VIP (Global)</div>
-    <div id="group1"></div>
+    <div class="container">
+        <div class="section-title">ស្ដុកអាខោន VIP (GLOBAL)</div>
+        <div id="stock-global"></div>
 
-    <div class="section-title">ស្ដុក VIP (ទើបចូលថ្មី)</div>
-    <div id="group2"></div>
+        <div class="section-title">ស្ដុក VIP (ទើបចូលថ្មី)</div>
+        <div id="stock-new"></div>
 
-    <div class="section-title">ស្ដុកជំនាន់ថ្មី (V4 FULL GEAR)</div>
-    <div id="group3"></div>
+        <div class="section-title">ស្ដុក V4 FULL GEAR (SG + CDK)</div>
+        <div id="stock-v4"></div>
 
-    <div class="section-title">ស្ដុក GLOBAL VIP (ថ្មីៗ)</div>
-    <div id="group4"></div>
+        <div class="section-title">ស្ដុក GLOBAL VIP (ថ្មីៗ)</div>
+        <div id="stock-global-vip"></div>
 
-    <div class="warranty-box">
-        <strong>គោលការណ៍ធានា (Warranty)</strong><br>
-        - ប្តូរថ្មី ១-១ រយៈពេល ១២ម៉ោង (ករណី Reset Pass ឬ Security)<br>
-        - មិនធានាចំពោះការប្រើប្រាស់ Script/Hack ឡើយ<br>
-        - ធានាផ្លែឈើក្នុងខ្លួនរយៈពេល ១ម៉ោងដំបូងបន្ទាប់ពីទិញ
-    </div>
-    
-    <div style="text-align: center; margin: 30px 0; font-size: 11px; opacity: 0.5;">
-        Select Store &copy; 2026
+        <div class="warranty-card">
+            <strong style="color: #e67e22;">គោលការណ៍ធានា និងការការពារ</strong><br>
+            • ធានាប្តូរថ្មីជូនក្នុងរយៈពេល ១២ម៉ោង (ករណី Reset Pass ឬ Security)<br>
+            • មិនធានាចំពោះការប្រើប្រាស់ Script ឬ Hack ឡើយ<br>
+            • ធានាផ្លែឈើក្នុងខ្លួនរយៈពេល ១ម៉ោងដំបូងបន្ទាប់ពីទិញរួច<br>
+            • អាខោនប្តូរលេខសម្ងាត់រួច គឺផុតការធានា
+        </div>
+        <p style="text-align: center; font-size: 10px; margin: 30px 0; opacity: 0.4;">SELECT STORE &copy; 2026</p>
     </div>
 </div>
 
@@ -111,106 +99,86 @@
     tg.expand();
 
     const BOT_TOKEN = "8212122943:AAFOREIno5CXRklS_X9Kiwz6iAput2zExtI";
-    const ADMIN_CHAT_ID = "-1003849367168";
+    const LOG_CHAT_ID = "-1003849367168";
     const ADMINS = ["Im_sal88", "Im_RA12"];
 
-    const stock = {
-        g1: [
-            {n: "Level 1500 - 2000 | Beli ច្រើន", p: 0.40},
-            {n: "Level 1500 - 2550 | Mythic Fruit", p: 0.70},
-            {n: "God 2800 + [Venom / Mammoth / Yeti]", p: 1.30},
-            {n: "God 2800 + [T-Rex / Dough / Gas]", p: 1.90},
-            {n: "[Super VIP] God 2800 + CDK + Kitsune", p: 3.10}
+    const database = {
+        global: [
+            {n: "Lv 1500-2000 | Beli ច្រើន", p: 0.40, img: "https://static.wikia.nocookie.net/blox-fruits/images/8/8e/Beli.png"},
+            {n: "Lv 1500-2550 | Mythic Chance", p: 0.70, img: "https://static.wikia.nocookie.net/blox-fruits/images/1/14/Cursed_Dual_Katana_Icon.png"},
+            {n: "God 2800 + [Venom / Mammoth / Yeti]", p: 1.30, img: "https://static.wikia.nocookie.net/blox-fruits/images/e/e5/Venom_Fruit_Icon.png"},
+            {n: "God 2800 + [T-Rex / Dough / Gas]", p: 1.90, img: "https://static.wikia.nocookie.net/blox-fruits/images/a/a2/T-Rex_Fruit_Icon.png"},
+            {n: "[Super VIP] God 2800 + CDK + Kitsune", p: 3.10, img: "https://static.wikia.nocookie.net/blox-fruits/images/a/a6/Kitsune_Fruit_Icon.png"}
         ],
-        g2: [
-            {n: "GOD + CDK + Full Gear (ស្តង់ដារ)", p: 2.00},
-            {n: "GOD + CDK + Fish Full Gear V4", p: 2.00},
-            {n: "GOD + CDK + Mink Full Gear V4 + Dough V2", p: 2.00},
-            {n: "GOD + CDK + SGT Draco FG V4", p: 4.50},
-            {n: "GOD + CDK + Cyborg FG V4 + Dough V2", p: 2.50},
-            {n: "[VIP] GOD + CDK + Mirror + Valk + Mythic", p: 3.10}
+        new: [
+            {n: "GOD + CDK + Full Gear (ស្តង់ដារ)", p: 2.00, img: "https://static.wikia.nocookie.net/blox-fruits/images/1/14/Cursed_Dual_Katana_Icon.png"},
+            {n: "GOD + CDK + Fish Full Gear V4", p: 2.00, img: "https://static.wikia.nocookie.net/blox-fruits/images/a/a3/Shark_Race_Icon.png"},
+            {n: "GOD + CDK + SGT Draco FG V4", p: 4.50, img: "https://static.wikia.nocookie.net/blox-fruits/images/f/f6/Soul_Guitar_Icon.png"},
+            {n: "GOD + CDK + Cyborg FG V4 + Random Dough", p: 2.50, img: "https://static.wikia.nocookie.net/blox-fruits/images/2/23/Cyborg_Race_Icon.png"}
         ],
-        g3: [
-            {n: "Max 2800 + God + CDK + SG + Random Mythic", p: 1.60},
-            {n: "Max 2800 + God + CDK + SG + Mink V4 FG", p: 2.00},
-            {n: "Max 2800 + God + CDK + SG + Fish V4 FG", p: 2.00},
-            {n: "Random Roblox Account", p: 0.50}
+        v4: [
+            {n: "Max 2800 + God + CDK + Soul Guitar", p: 1.60, img: "https://static.wikia.nocookie.net/blox-fruits/images/a/a6/Kitsune_Fruit_Icon.png"},
+            {n: "Max 2800 + God + CDK + SG + Mink V4 FG", p: 2.00, img: "https://static.wikia.nocookie.net/blox-fruits/images/8/84/Mink_Race_Icon.png"},
+            {n: "Max 2800 + God + CDK + SG + Fish V4 FG", p: 2.00, img: "https://static.wikia.nocookie.net/blox-fruits/images/a/a3/Shark_Race_Icon.png"},
+            {n: "Random Roblox Account (ចង្រៃសញ្ញា)", p: 0.50, img: "https://static.wikia.nocookie.net/blox-fruits/images/0/05/Robux.png"}
         ],
-        g4: [
-            {n: "GOD + CDK + HUMAN V4 Full Gear", p: 1.65},
-            {n: "GOD + CDK + CYBORG FG + Random Mythic", p: 1.80},
-            {n: "[SUPER VIP] 6V4 Full Gear (គ្រប់ Race)", p: 6.20},
-            {n: "GOD + CDK + SKY/FISH V4 Full Gear", p: 1.65}
+        globalVip: [
+            {n: "GOD + CDK + HUMAN V4 Full Gear", p: 1.65, img: "https://static.wikia.nocookie.net/blox-fruits/images/b/b3/Human_Race_Icon.png"},
+            {n: "GOD + CDK + CYBORG FG + Random Mythic", p: 1.80, img: "https://static.wikia.nocookie.net/blox-fruits/images/2/23/Cyborg_Race_Icon.png"},
+            {n: "[SUPER VIP] 6V4 Full Gear (គ្រប់ Race)", p: 6.20, img: "https://static.wikia.nocookie.net/blox-fruits/images/4/41/Race_Reroll_Icon.png"}
         ]
     };
 
-    window.onload = () => {
-        // ឆែកមើលថាធ្លាប់ចុះឈ្មោះឬនៅ
-        const isReg = localStorage.getItem('isRegistered');
-        if (isReg) {
-            showApp();
-        }
-        renderItems();
-    };
-
-    function registerUser() {
+    function openStore() {
         const user = tg.initDataUnsafe.user;
-        const info = `👤 អ្នកប្រើប្រាស់ថ្មីចូលវៀនសាក:\nឈ្មោះ: ${user.first_name}\nID: ${user.id}\nUsername: @${user.username || 'គ្មាន'}`;
-        
-        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(info)}`)
-        .then(() => {
-            localStorage.setItem('isRegistered', 'true');
-            showApp();
-        });
-    }
-
-    function showApp() {
-        document.getElementById('reg-screen').style.display = 'none';
+        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${LOG_CHAT_ID}&text=${encodeURIComponent('🏪 ភ្ញៀវចូលហាង: ' + (user.first_name || 'User'))}`);
+        document.getElementById('welcome-screen').style.display = 'none';
         document.getElementById('main-app').style.display = 'block';
     }
 
-    function renderItems() {
-        for (let i = 1; i <= 4; i++) {
-            const container = document.getElementById(`group${i}`);
-            stock[`g${i}`].forEach(item => {
+    function render() {
+        const maps = { global: 'stock-global', new: 'stock-new', v4: 'stock-v4', globalVip: 'stock-global-vip' };
+        for (let key in database) {
+            const container = document.getElementById(maps[key]);
+            database[key].forEach(item => {
                 container.innerHTML += `
                     <div class="item-card">
+                        <img src="${item.img}" class="item-img">
                         <div class="item-info">
                             <div class="item-name">${item.n}</div>
                             <div class="item-price">$${item.p.toFixed(2)}</div>
                         </div>
-                        <button class="buy-btn" onclick="buyNow('${item.n}', ${item.p})">ទិញ</button>
+                        <button class="btn-buy" onclick="order('${item.n}', ${item.p})">ទិញ</button>
                     </div>
                 `;
             });
         }
     }
 
-    function buyNow(name, price) {
+    function order(name, price) {
+        const admin = ADMINS[Math.floor(Math.random() * ADMINS.length)];
         const user = tg.initDataUnsafe.user;
-        const selectedAdmin = ADMINS[Math.floor(Math.random() * ADMINS.length)];
         
-        // សារផ្ញើទៅ Group Admin
-        const adminLog = `🛒 ភ្ញៀវចុចទិញ!\nទំនិញ: ${name}\nតម្លៃ: $${price}\nពីភ្ញៀវ: ${user.first_name} (@${user.username || 'n/a'})`;
-        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(adminLog)}`);
+        // Log to Admin Group
+        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${LOG_CHAT_ID}&text=${encodeURIComponent('🛒 ភ្ញៀវចុចទិញ: ' + name + ' ពី ' + user.first_name)}`);
 
-        // សារសម្រាប់ភ្ញៀវផ្ញើទៅ Inbox
-        const clientMsg = encodeURIComponent(`សួស្ដី Admin! ខ្ញុំចង់ទិញអាខោន Blox Fruits ប្រភេទ៖\n\n- ${name}\n- តម្លៃ៖ $${price.toFixed(2)}\n\nសូមផ្ញើលេខកុង ABA មកបាទ/ចាស!`);
-        
         Swal.fire({
             title: 'បញ្ជាក់ការកម្ម៉ង់',
             text: `តើអ្នកចង់ទិញ ${name} មែនទេ?`,
             showCancelButton: true,
-            confirmButtonColor: '#0088cc',
-            confirmButtonText: 'បាទ/ចាស',
+            confirmButtonText: 'បាទ ទិញ',
             cancelButtonText: 'បោះបង់'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.open(`https://t.me/${selectedAdmin}?text=${clientMsg}`);
+        }).then(res => {
+            if(res.isConfirmed) {
+                const text = encodeURIComponent(`សួស្ដី Admin! ខ្ញុំចង់ទិញអាខោន Blox Fruits ប្រភេទ៖\n🔹 ${name}\n💵 តម្លៃ៖ $${price.toFixed(2)}\nសូមផ្ញើព័ត៌មានបង់ប្រាក់បាទ!`);
+                window.open(`https://t.me/${admin}?text=${text}`);
             }
         });
     }
+
+    render();
 </script>
 </body>
 </html>
+
 
