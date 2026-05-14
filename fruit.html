@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ហាងលក់ផ្លែបិសាច | Select Store</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;600;700&family=Moul&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        :root {
+            --bg: #e0e5ec;
+            --primary: #0088cc;
+            --accent: #d35400;
+            --shadow: 6px 6px 12px #a3b1c6, -6px -6px 12px #ffffff;
+            --inner-shadow: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kantumruy Pro', sans-serif; }
+        body { background-color: var(--bg); color: #31344b; padding: 15px; }
+
+        .page-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; position: sticky; top: 0; background: var(--bg); padding: 10px 0; z-index: 100; }
+        .back-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--bg); box-shadow: var(--shadow); display: flex; align-items: center; justify-content: center; color: var(--primary); text-decoration: none; }
+        .page-title { font-family: 'Moul'; font-size: 14px; color: var(--primary); }
+
+        .category-label {
+            font-family: 'Moul';
+            font-size: 11px;
+            background: #cbd5e0;
+            padding: 8px 15px;
+            border-radius: 10px;
+            margin: 20px 0 10px;
+            color: #4a5568;
+            box-shadow: var(--inner-shadow);
+            border-left: 5px solid var(--primary);
+        }
+
+        .product-list { display: flex; flex-direction: column; gap: 12px; }
+        
+        .product-item { 
+            background: var(--bg); 
+            padding: 15px; 
+            border-radius: 20px; 
+            box-shadow: var(--shadow); 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info { flex: 1; }
+        .info h4 { font-size: 12px; font-weight: 700; color: #444; text-transform: uppercase; }
+        .price { color: var(--accent); font-weight: 800; font-size: 15px; }
+
+        .buy-btn { 
+            padding: 10px 18px; 
+            border-radius: 12px; 
+            border: none; 
+            background: var(--bg); 
+            box-shadow: var(--shadow); 
+            color: var(--primary); 
+            font-weight: 800; 
+            font-size: 11px; 
+            cursor: pointer;
+        }
+        .buy-btn:active { box-shadow: var(--inner-shadow); transform: scale(0.95); }
+
+        .footer { text-align: center; margin: 30px 0; font-size: 9px; opacity: 0.4; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="page-header">
+        <a href="Acc.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+        <div class="page-title">លក់ផ្លែបិសាច (PHYSICAL)</div>
+    </div>
+
+    <div class="category-label">ក្រុមតម្លៃពិសេស (PREMIUM)</div>
+    <div class="product-list" id="premium-list"></div>
+
+    <div class="category-label">ក្រុមផ្លែតម្លៃខ្ពស់ (HIGH VALUE)</div>
+    <div class="product-list" id="high-value-list"></div>
+
+    <div class="category-label">ក្រុមផ្លែតម្លៃមធ្យម (MID VALUE)</div>
+    <div class="product-list" id="mid-list"></div>
+
+    <div class="category-label">ក្រុមផ្លែតម្លៃសមរម្យ (BUDGET)</div>
+    <div class="product-list" id="budget-list"></div>
+
+    <div class="footer">រក្សាសិទ្ធិដោយ SELECT STORE &copy; 2026</div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        const BOT_TOKEN = "8661740556:AAGQ9ACVbloeR0fATqRtmF_dagYArdqMbe0";
+        const LOG_GROUP = "-1003370332093";
+
+        const sections = [
+            { id: 'premium-list', items: [
+                { name: "Yellow Lightning", price: 7.60 },
+                { name: "Red Lightning", price: 7.60 },
+                { name: "Super Spirit Pain", price: 7.10 },
+                { name: "Divine Portal", price: 6.60 }
+            ]},
+            { id: 'high-value-list', items: [
+                { name: "Werewolf", price: 4.15 },
+                { name: "Fiend Yeti", price: 3.65 },
+                { name: "Rose Quartz Diamond", price: 3.65 },
+                { name: "Kitsune (Normal)", price: 3.15 },
+                { name: "Sadness Pain", price: 3.15 },
+                { name: "Celestial Pain", price: 3.15 }
+            ]},
+            { id: 'mid-list', items: [
+                { name: "Emerald Diamond", price: 2.65 },
+                { name: "Topaz Diamond", price: 2.65 },
+                { name: "Frustration Pain", price: 2.65 },
+                { name: "Green Lightning", price: 2.15 },
+                { name: "Ruby Diamond", price: 1.45 },
+                { name: "Torment Pain", price: 1.45 },
+                { name: "Tiger", price: 1.20 },
+                { name: "Yeti", price: 1.20 },
+                { name: "Sea", price: 1.20 },
+                { name: "Lightning", price: 1.20 }
+            ]},
+            { id: 'budget-list', items: [
+                { name: "Celebration Bomb", price: 0.95 },
+                { name: "T-Rex", price: 0.95 },
+                { name: "Dough", price: 0.95 },
+                { name: "Gas", price: 0.95 },
+                { name: "Cross", price: 0.85 },
+                { name: "Pain", price: 0.85 },
+                { name: "Buddha", price: 0.75 },
+                { name: "Portal", price: 0.75 },
+                { name: "Mammoth", price: 0.75 },
+                { name: "Spirit", price: 0.75 },
+                { name: "Gravity", price: 0.75 },
+                { name: "Venom", price: 0.75 },
+                { name: "Sound", price: 0.65 },
+                { name: "Spider", price: 0.65 },
+                { name: "Love", price: 0.65 },
+                { name: "Phoenix", price: 0.65 },
+                { name: "Quake", price: 0.65 },
+                { name: "Creation", price: 0.65 }
+            ]}
+        ];
+
+        function renderShop() {
+            sections.forEach(sec => {
+                const container = document.getElementById(sec.id);
+                sec.items.forEach(item => {
+                    container.innerHTML += `
+                        <div class="product-item">
+                            <div class="info">
+                                <h4>${item.name}</h4>
+                                <div class="price">$${item.price.toFixed(2)}</div>
+                            </div>
+                            <button class="buy-btn" onclick="startOrder('${item.name}', ${item.price})">បញ្ជាទិញ</button>
+                        </div>
+                    `;
+                });
+            });
+        }
+
+        async function startOrder(name, price) {
+            if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+            const { value: qty } = await Swal.fire({
+                title: 'បញ្ចូលចំនួន',
+                input: 'number',
+                inputValue: 1,
+                showCancelButton: true,
+                cancelButtonText: 'បោះបង់',
+                confirmButtonText: 'បន្ត',
+                confirmButtonColor: '#0088cc',
+                inputAttributes: { min: 1 }
+            });
+
+            if (qty && qty > 0) {
+                const total = (price * qty).toFixed(2);
+                Swal.fire({
+                    title: 'បញ្ជាក់ការទិញ',
+                    html: `ទំនិញ: <b>${name}</b><br>ចំនួន: <b>${qty}</b><br>សរុប: <b style="color:#d35400;">$${total}</b>`,
+                    showCancelButton: true,
+                    cancelButtonText: 'ទេ',
+                    confirmButtonText: 'យល់ព្រម',
+                    confirmButtonColor: '#22c55e'
+                }).then(res => {
+                    if (res.isConfirmed) sendToBot(name, qty, total);
+                });
+            }
+        }
+
+        function sendToBot(name, qty, total) {
+            const user = tg.initDataUnsafe.user;
+            const msg = `🛒 **ការបញ្ជាទិញថ្មី (Physical Fruit)**\n━━━━━━━━━━━━━━━━\n👤 អ្នកទិញ: ${user ? user.first_name : 'Unknown'}\n🆔 ID: \`${user ? user.id : 'N/A'}\`\n📦 ទំនិញ: ${name}\n🔢 ចំនួន: ${qty}\n💰 សរុប: $${total}\n━━━━━━━━━━━━━━━━`;
+
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: LOG_GROUP, text: msg, parse_mode: 'Markdown' })
+            });
+
+            Swal.fire('ជោគជ័យ!', 'ព័ត៌មានផ្ញើទៅ Admin រួចរាល់', 'success').then(() => {
+                window.open(`https://t.me/Im_sal88?text=${encodeURIComponent("សួស្ដី Admin! ខ្ញុំចង់ទិញផ្លែបិសាច:\n- " + name + "\n- ចំនួន: " + qty + "\n- សរុប: $" + total)}`, '_blank');
+            });
+        }
+
+        renderShop();
+    </script>
+</body>
+</html>
