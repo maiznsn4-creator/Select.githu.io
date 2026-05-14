@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Store | Main Menu</title>
+    <!-- Telegram WebApp SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;600;700&family=Moul&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg: #e0e5ec;
+            --primary: #0088cc;
+            --accent: #ff4757;
+            --shadow: 9px 9px 18px #a3b1c6, -9px -9px 18px #ffffff;
+            --inner-shadow: inset 6px 6px 12px #a3b1c6, inset -6px -6px 12px #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kantumruy Pro', sans-serif; }
+        body { background-color: var(--bg); color: #31344b; padding: 20px; overflow-x: hidden; min-height: 100vh; }
+
+        /* Profile Header */
+        .user-header {
+            background: var(--bg);
+            padding: 15px 20px;
+            border-radius: 25px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .user-header img {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            box-shadow: var(--inner-shadow);
+            border: 2px solid #fff;
+            object-fit: cover;
+        }
+        .user-header .info h3 { font-size: 14px; color: var(--primary); font-weight: 700; }
+        .user-header .info p { font-size: 10px; opacity: 0.6; font-weight: 600; }
+
+        /* Banner Area */
+        .banner-container {
+            width: 100%;
+            height: 140px;
+            border-radius: 25px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 25px;
+            background: #fff;
+        }
+        .banner-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-family: 'Moul';
+            font-size: 14px;
+            color: #d35400;
+            margin-bottom: 15px;
+            padding-left: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title::after {
+            content: "";
+            flex: 1;
+            height: 2px;
+            background: #a3b1c6;
+            opacity: 0.3;
+        }
+
+        /* Menu Grid */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .menu-item {
+            background: var(--bg);
+            padding: 20px 10px;
+            border-radius: 25px;
+            box-shadow: var(--shadow);
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: 0.2s;
+        }
+        .menu-item:active {
+            box-shadow: var(--inner-shadow);
+            transform: scale(0.95);
+        }
+
+        .img-box {
+            width: 85px;
+            height: 85px;
+            background: var(--bg);
+            border-radius: 20px;
+            box-shadow: var(--inner-shadow);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+        }
+        .img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .menu-item span {
+            font-size: 11px;
+            font-weight: 800;
+            color: #444;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 9px;
+            opacity: 0.4;
+            font-weight: bold;
+            padding-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header បង្ហាញព័ត៌មានអ្នកប្រើប្រាស់ -->
+    <div class="user-header">
+        <img id="u-photo" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+        <div class="info">
+            <h3 id="u-name">សូមរង់ចាំ...</h3>
+            <p id="u-id">ID: 00000000</p>
+            <p id="u-username" style="color: var(--primary);">@customer</p>
+        </div>
+    </div>
+
+    <!-- Banner Promotion -->
+    <div class="banner-container">
+        <img src="banner.png" onerror="this.src='https://img.freepik.com/free-vector/gaming-banner-template-with-concept_23-2148662994.jpg'">
+    </div>
+
+    <!-- ចំណងជើងមឺនុយ -->
+    <div class="section-title">សេវាកម្មហាង</div>
+
+    <!-- បញ្ជីប៊ូតុងទំនិញ (រូបភាព 1-5) -->
+    <div class="menu-grid">
+        
+        <a href="growagarden.html" class="menu-item">
+            <div class="img-box">
+                <img src="1.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/628/628283.png'">
+            </div>
+            <span>GROW A GARDEN</span>
+        </a>
+
+        <a href="bloxfruit.html" class="menu-item">
+            <div class="img-box">
+                <img src="2.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1141/1141933.png'">
+            </div>
+            <span>BLOX FRUIT ACC</span>
+        </a>
+
+        <a href="gamepass.html" class="menu-item">
+            <div class="img-box">
+                <img src="3.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/8002/8002123.png'">
+            </div>
+            <span>GAMEPASS</span>
+        </a>
+
+        <a href="fruit.html" class="menu-item">
+            <div class="img-box">
+                <img src="4.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/415/415733.png'">
+            </div>
+            <span>FRUIT (ITEM)</span>
+        </a>
+
+        <a href="permfruit.html" class="menu-item" style="grid-column: span 2; width: 65%; margin: 0 auto;">
+            <div class="img-box">
+                <img src="5.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1055/1055829.png'">
+            </div>
+            <span>PERM FRUIT</span>
+        </a>
+
+    </div>
+
+    <div class="footer">
+        <p>SELECT STORE PREMIUM &copy; 2026</p>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        // ១. ប្រព័ន្ធការពារសុវត្ថិភាព (បើមិនទាន់ Verify គឺមិនឱ្យចូលមើល)
+        if (sessionStorage.getItem('isVerified') !== 'true') {
+            window.location.href = 'index.html';
+        }
+
+        // ២. បង្ហាញព័ត៌មានអ្នកប្រើប្រាស់ពី Telegram
+        const user = tg.initDataUnsafe.user;
+        if (user) {
+            document.getElementById('u-name').innerText = user.first_name + (user.last_name ? ' ' + user.last_name : '');
+            document.getElementById('u-id').innerText = "ID: " + user.id;
+            document.getElementById('u-username').innerText = user.username ? "@" + user.username : "@customer";
+            
+            // បើមានរូប Profile ក្នុង Telegram ឱ្យបង្ហាញរូបនោះ
+            if (user.photo_url) {
+                document.getElementById('u-photo').src = user.photo_url;
+            }
+        }
+
+        // ៣. បន្ថែមរំញ័រពេលចុច (Haptic Feedback)
+        document.querySelectorAll('.menu-item').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (tg.HapticFeedback) {
+                    tg.HapticFeedback.impactOccurred('medium');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
