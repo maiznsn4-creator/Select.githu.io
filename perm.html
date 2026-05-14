@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permanent Fruit | Coming Soon</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;600;700&family=Moul&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg: #e0e5ec;
+            --primary: #0088cc;
+            --shadow: 9px 9px 16px #a3b1c6, -9px -9px 16px #ffffff;
+            --inner-shadow: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kantumruy Pro', sans-serif; }
+        body { 
+            background-color: var(--bg); 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
+            padding: 20px;
+            color: #31344b;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 60px 20px;
+            background: var(--bg);
+            border-radius: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .icon-box {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 30px;
+            background: var(--bg);
+            box-shadow: var(--shadow);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #e67e22; /* ពណ៌ទឹកក្រូចតំណាងឱ្យការរង់ចាំ */
+            font-size: 40px;
+        }
+
+        h1 {
+            font-family: 'Moul';
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: #cbd5e0;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #4a5568;
+            box-shadow: var(--inner-shadow);
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #718096;
+            margin-bottom: 40px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 12px 40px;
+            background: var(--bg);
+            box-shadow: var(--shadow);
+            border-radius: 15px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 14px;
+            transition: 0.2s ease;
+        }
+
+        .back-btn:active {
+            box-shadow: var(--inner-shadow);
+            transform: scale(0.95);
+        }
+
+        /* គំនូរជីវចល Loading */
+        .loading-dots {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+            opacity: 0.5;
+        }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.3); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="icon-box">
+            <i class="fas fa-hourglass-half"></i>
+        </div>
+        
+        <div class="status-badge">COMING SOON</div>
+        
+        <h1>នឹងមកដល់ឆាប់ៗនេះ</h1>
+        
+        <p>ផ្នែកលក់ផ្លែបិសាចអចិន្ត្រៃយ៍ (Perm Fruit)<br>កំពុងរៀបចំតម្លៃ និងប្រព័ន្ធបញ្ជាទិញ។<br>សូមអភ័យទោសចំពោះការរង់ចាំ!</p>
+        
+        <a href="Acc.html" class="back-btn">ត្រឡប់ក្រោយ</a>
+
+        <div class="loading-dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+        
+        // បើចង់ឱ្យមានរំញ័រពេលចូលមកដល់
+        if (tg.HapticFeedback) {
+            tg.HapticFeedback.notificationOccurred('warning');
+        }
+    </script>
+</body>
+</html>
+
